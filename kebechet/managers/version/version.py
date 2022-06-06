@@ -19,6 +19,7 @@
 
 import logging
 from typing import List, Tuple
+import re
 
 import yaml
 from github.GithubException import GithubException
@@ -160,6 +161,7 @@ class VersionManager(ManagerBase):
                 ),
                 target_branch=self.project.default_branch,
                 source_branch=branch_name,
+                fork_username='shreekarSS'
             )
         except GithubException as ghub_exc:
             errors = ghub_exc.data.get("errors", [])  # type: ignore
@@ -202,7 +204,15 @@ class VersionManager(ManagerBase):
                 return
 
         trigger: BaseTrigger
+        _LOGGER.info("here.....")
 
+        if (self.parsed_payload and utils._is_merge_event(self.parsed_payload)):
+            pr_title = self.parsed_payload["raw_payload"]["payload"]["pull_request"]["title"]
+            version = re.search(r'version\s*([\d.]+)', pr_title).group(1)
+            with cloned_repo(self) as repo:
+                repo.git.create_tag(f"v{version}")
+                repo.git.push()
+            return
         if (
             pr_releases
             and self.parsed_payload
@@ -258,6 +268,8 @@ class VersionManager(ManagerBase):
                 new_version=new_version,
                 has_prev_release=has_prev_release,
             )
+
+
 
         reported_issues = []
         version_update_complete = False
@@ -342,6 +354,7 @@ class VersionManager(ManagerBase):
                     issue.close()
                     raise ManagerFailedException from exc
 
+
             self._create_pr_for_trigger_release(
                 trigger=trigger,
                 changelog=changelog,
@@ -356,3 +369,4 @@ class VersionManager(ManagerBase):
         for reported_issue in reported_issues:
             reported_issue.comment("Closing as this issue is no longer relevant.")
             reported_issue.close()
+

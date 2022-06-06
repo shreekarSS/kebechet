@@ -66,6 +66,7 @@ def run_webhook(payload: Dict[str, Any]):
     """Run Kebechet using payload from webhook."""
     _payload_ = PayloadParser(payload)
     parsed_payload = _payload_.parsed_data()
+    _LOGGER.info(parsed_payload)
 
     if parsed_payload is not None:
         url = parsed_payload.get("url")  # type: Optional[str]
@@ -245,3 +246,4 @@ def run(
             )
 
     _LOGGER.info("Finished management for %r", slug)
+
