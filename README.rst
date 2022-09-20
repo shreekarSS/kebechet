@@ -2,7 +2,7 @@
 
 
 ========
-
+.
 .. image:: https://img.shields.io/github/v/tag/thoth-station/kebechet?style=plastic
   :target: https://github.com/thoth-station/kebechet/tags
   :alt: GitHub tag (latest by date)
