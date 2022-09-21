@@ -50,4 +50,4 @@ Full documentation
 For full documentation go `here
 <https://thoth-station.ninja/docs/developers/kebechet>`__
 
-TEst
+demo
