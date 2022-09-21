@@ -1,6 +1,5 @@
 .. begin
 
-Kebechet
 
 ========
 
