@@ -33,7 +33,7 @@ Contribute
 - Issue Tracker:`<github.com/thoth-station/kebechet/issues>`_
 - Source Code: `<github.com/thoth-station/kebechet>`_
 
-Support
+Support 
 -------
 
 If you are having issues, please let us know by opening an issue
